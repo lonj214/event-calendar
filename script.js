@@ -1,6 +1,38 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+var currentDayEl = $('#currentDay');
+
+function displayDate() {
+    var todaysDate = dayjs().format('MMM DD, YYYY');
+    currentDayEl.text(rightNow);
+  }
+// Going to create a function that will save events put into calendar; Need to include id in the containing time-block
+function readEventsFromStorage() {
+    var hourlyEvents = localStorage.getItem('events');
+    if (events) {
+      events = JSON.parse(events);
+    } else {
+      events = [];
+    }
+    return events;
+  }
+
+//   this function should take the array of events and save them into local storage
+
+function saveEventsToStorage(events) {
+    localStorage.setItem('events', JSON.stringify(events));
+  }
+
+//   this should get the event from local storage
+var projects = readEventsFromStorage();
+
+// loops through each event and creates a row HOWEVER i dont need a row I need them to attach to their respective hour
+// for (var i = 0; i < projects.length; i += 1) {
+//     var project = projects[i];
+//     var projectDate = dayjs(project.date);
+//     // get date/time for start of today
+//     var today = dayjs().startOf('day');
 $(function () {
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
