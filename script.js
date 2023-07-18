@@ -33,6 +33,7 @@ $(function () {
   function saveEventsToStorage(events) {
     localStorage.setItem('events', JSON.stringify(events));
   }
+
   // now we need to take the array of events and save them to their appropriate id and display it there
   function printEventData() {
     eventDisplayEl.empty();
@@ -65,7 +66,7 @@ $(function () {
     // attribute of each time-block be used to do this?
     //
     // TODO: Add code to display the current date in the header of the page.
-    
+
   }
   var currentDayEl = $('#currentDay');
 
@@ -75,25 +76,37 @@ $(function () {
   }
   displayDate()
   function determineTimeNow() {
-    var currentTime =  dayjs().hour()
+    var currentTime = dayjs().hour()
     console.log(currentTime)
     console.log($(this).attr("id").slice(5))
-   var hour = $(this).attr("id").slice(5)
-//     console.log(hour)
-  if (hour < currentTime) {
-    $(this).addClass("past").removeClass("present future")
-  } 
-  else if (hour == currentTime) {
-    $(this).addClass("present").removeClass("past future")
-  }
-  else {
-    $(this).addClass("future").removeClass("present past")
-  }
+    var hour = $(this).attr("id").slice(5)
+    //     console.log(hour)
+    if (hour < currentTime) {
+      $(this).addClass("past").removeClass("present future")
+    }
+    else if (hour == currentTime) {
+      $(this).addClass("present").removeClass("past future")
+    }
+    else {
+      $(this).addClass("future").removeClass("present past")
+    }
 
 
-  } 
+  }
   $(".time-block").each(determineTimeNow)
-  
+
+  $(".saveBtn").click(function(){
+    console.log($(this).parent().attr("id"))
+    var words = $(this).siblings("textarea").val()
+    console.log(words)
+    var id = $(this).parent().attr("id")
+    localStorage.setItem(id, words)
+  })
+// Each loop through time block, got to local storage and get the time block id from local storage and apply it back
+$(".time-block").each(function(){
+  var id = $(this).attr("id")
+  $(this).children("textarea").val(localStorage.getItem(id))
+})
 });
 
 
