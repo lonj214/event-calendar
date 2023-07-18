@@ -65,30 +65,35 @@ $(function () {
     // attribute of each time-block be used to do this?
     //
     // TODO: Add code to display the current date in the header of the page.
-    var currentDayEl = $('#currentDay');
-
-    function displayDate() {
-      var todaysDate = dayjs().format('MMM DD, YYYY');
-      currentDayEl.text(rightNow);
-    }
-
+    
   }
+  var currentDayEl = $('#currentDay');
+
+  function displayDate() {
+    var todaysDate = dayjs().format('MMM DD, YYYY');
+    currentDayEl.text(todaysDate);
+  }
+  displayDate()
   function determineTimeNow() {
-    var currentTime = new Date()
+    var currentTime =  dayjs().hour()
     console.log(currentTime)
-    var hour = currentTime.getHours() - 7
-    console.log(hour)
-for (var i = 9; i <= 17; i ++) {
-  if (hour > i) {
-    $(`#hour-${i}`).addClass("past")
+    console.log($(this).attr("id").slice(5))
+   var hour = $(this).attr("id").slice(5)
+//     console.log(hour)
+  if (hour < currentTime) {
+    $(this).addClass("past").removeClass("present future")
   } 
-  else if (hour === i) {
-    $(`#hour-${i}`).addClass("present")
+  else if (hour == currentTime) {
+    $(this).addClass("present").removeClass("past future")
   }
-}
+  else {
+    $(this).addClass("future").removeClass("present past")
+  }
 
-  }
-  determineTimeNow()
+
+  } 
+  $(".time-block").each(determineTimeNow)
+  
 });
 
 
